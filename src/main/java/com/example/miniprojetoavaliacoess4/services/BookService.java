@@ -40,7 +40,8 @@ public class BookService {
     @Transactional
     public BookDTO create(CreateBookDTO body, UserDetails userInSession) throws PersonNotFoundException {
         Person person = this.personService.findByEmail(userInSession.getUsername());
-        Book book = this.bookRepository.save(new Book(body, person));
+        Book book = new Book(body, person);
+        this.bookRepository.save(book);
         return new BookDTO(book);
     }
 

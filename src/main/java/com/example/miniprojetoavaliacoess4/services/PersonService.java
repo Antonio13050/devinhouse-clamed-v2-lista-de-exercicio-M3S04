@@ -32,7 +32,8 @@ public class PersonService implements UserDetailsService {
     @Transactional
     public PersonDTO create(CreatePersonDTO createPersonDTO){
         String passwordEncoded = this.passwordEncoder.encode(createPersonDTO.password());
-        Person person = this.personRepository.save(new Person(createPersonDTO, passwordEncoded));
+        Person person = new Person(createPersonDTO, passwordEncoded);
+        this.personRepository.save(person);
         return new PersonDTO(person);
     }
 

@@ -30,7 +30,8 @@ public class ReviewService {
         Person person = this.personService.findByEmail(userInSession.getUsername());
         Book book = this.bookService.findByGuidBook(idBook);
 
-        Review review = this.reviewRepository.save(new Review(body, person, book));
+        Review review = new Review(body, person, book);
+        this.reviewRepository.save(review);
         book.getReviews().add(review);
         return new ReviewDTO(review);
 

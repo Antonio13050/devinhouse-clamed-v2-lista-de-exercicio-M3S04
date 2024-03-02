@@ -43,12 +43,20 @@ public class Person implements UserDetails {
         return guid;
     }
 
+    public void setGuid(String guid) {
+        this.guid = guid;
+    }
+
     public String getName() {
         return name;
     }
 
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
