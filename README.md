@@ -16,6 +16,12 @@ Este projeto consiste no desenvolvimento de um sistema de avaliação de livros,
 
 - **Consulta de Livro Específico**: Usuários autenticados podem buscar informações detalhadas sobre um livro específico, incluindo sua lista de avaliações e a média de avaliações, bem como a contagem de avaliações para cada nota de 1 a 5.
 
+## Funcionalidades Adicionais Implementadas
+
+- Testes Unitários com Mockito: Foram adicionados testes unitários para as operações de cadastro de usuário, cadastro de livros, listagem de livros, busca por um livro e cadastro de avaliação, utilizando o Mockito para simular o comportamento de dependências.
+
+- Testes de Integração com TestContainers: Testes de integração foram implementados para todos os endpoints dos controladores de livros e usuários, utilizando o TestContainers para configurar um ambiente de teste com um banco de dados PostgreSQL em um contêiner Docker.
+
 ## Estrutura do Projeto
 
 O projeto está estruturado da seguinte forma:
@@ -36,6 +42,8 @@ O projeto está estruturado da seguinte forma:
 - PostgreSQL
 - Bean Validation
 - Maven
+- Mockito
+- TestContainers
 
 ## Como Contribuir
 
