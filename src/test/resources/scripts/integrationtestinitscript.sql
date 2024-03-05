@@ -11,6 +11,8 @@ create table person (
         email varchar(255) not null,
         enabled boolean not null,
         name varchar(255) not null,
+        notification_type varchar(255) not null check (notification_type in ('EMAIL','SMS')),
+        phone varchar(255) not null,
         password varchar(255) not null,
         primary key (guid)
     );
@@ -69,9 +71,9 @@ alter table if exists reviews_to_book
 insert
        into
            person
-           (email, enabled, name, password, guid)
+           (email, enabled, name, notification_type, phone, password, guid)
        values
-           ('user@test.com', true, 'User 01', '$2a$10$5V7LCv97Ch5.MZVqOrkXjusdHVT6nyY3K/fHOJGk5IApkMFs8eO.G', '0b063e50-b4bc-464a-b001-4dd2fb643495');
+           ('user@test.com', true, 'User 01', 'EMAIL', '48-99999-9999', '$2a$10$5V7LCv97Ch5.MZVqOrkXjusdHVT6nyY3K/fHOJGk5IApkMFs8eO.G', '0b063e50-b4bc-464a-b001-4dd2fb643495');
 
 insert
     into

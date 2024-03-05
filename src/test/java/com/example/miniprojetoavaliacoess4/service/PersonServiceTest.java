@@ -1,6 +1,8 @@
 package com.example.miniprojetoavaliacoess4.service;
 
+import com.example.miniprojetoavaliacoess4.exceptions.InvalidNotificationTypeException;
 import com.example.miniprojetoavaliacoess4.model.Person;
+import com.example.miniprojetoavaliacoess4.model.enums.NotificationTypeEnum;
 import com.example.miniprojetoavaliacoess4.model.transport.PersonDTO;
 import com.example.miniprojetoavaliacoess4.model.transport.operations.CreatePersonDTO;
 import com.example.miniprojetoavaliacoess4.repository.PersonRepository;
@@ -33,10 +35,10 @@ class PersonServiceTest {
     private ArgumentCaptor<Person> personCaptor;
 
     @Test
-    void createUserOnDatabaseWithNoFail() {
+    void createUserOnDatabaseWithNoFail() throws InvalidNotificationTypeException {
         /* Arrange */
         CreatePersonDTO form =
-                new CreatePersonDTO("user 01", "user01@example.com", "UmaSenhaForte");
+                new CreatePersonDTO("user@test.com", "User 01", "48-99999-9999", "UmaSenhaForte", NotificationTypeEnum.EMAIL);
         String passwordEncoded = this.passwordEncoder.encode(form.password());
 
         /* Act*/

@@ -1,6 +1,7 @@
 package com.example.miniprojetoavaliacoess4.controller.integration;
 
 import com.example.miniprojetoavaliacoess4.configuration.TestContainerDatabaseConfiguration;
+import com.example.miniprojetoavaliacoess4.model.enums.NotificationTypeEnum;
 import com.example.miniprojetoavaliacoess4.model.transport.PersonDTO;
 import com.example.miniprojetoavaliacoess4.model.transport.operations.CreatePersonDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -8,7 +9,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.filter.log.ErrorLoggingFilter;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
@@ -40,8 +40,8 @@ public class PersonControllerIntegrationTest extends TestContainerDatabaseConfig
                 .addFilter(new ResponseLoggingFilter(LogDetail.ALL))
                 .build();
 
-        createPersonDTO = new CreatePersonDTO("user@test.com", "User 01", "UmaSenhaForte");
-
+        createPersonDTO = new CreatePersonDTO("user@test.com", "User 01", "48-99999-9999", "UmaSenhaForte", NotificationTypeEnum.EMAIL);
+        String notificationType = NotificationTypeEnum.EMAIL.toString();
     }
 
     @Test

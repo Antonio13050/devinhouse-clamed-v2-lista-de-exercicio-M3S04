@@ -1,5 +1,6 @@
 package com.example.miniprojetoavaliacoess4.controller;
 
+import com.example.miniprojetoavaliacoess4.exceptions.InvalidNotificationTypeException;
 import com.example.miniprojetoavaliacoess4.exceptions.PersonNotFoundException;
 import com.example.miniprojetoavaliacoess4.model.Person;
 import com.example.miniprojetoavaliacoess4.model.transport.PersonDTO;
@@ -29,7 +30,7 @@ public class PersonController {
     }
 
     @PostMapping
-    public ResponseEntity<PersonDTO> create(@Valid @RequestBody CreatePersonDTO body, UriComponentsBuilder uriComponentsBuilder){
+    public ResponseEntity<PersonDTO> create(@Valid @RequestBody CreatePersonDTO body, UriComponentsBuilder uriComponentsBuilder) throws InvalidNotificationTypeException {
         PersonDTO response = this.personService.create(body);
         return ResponseEntity.created(uriComponentsBuilder.path("person/{id}").buildAndExpand(response.guid()).toUri()).body(response);
     }

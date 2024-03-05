@@ -1,9 +1,12 @@
 package com.example.miniprojetoavaliacoess4.services;
 
+import com.example.miniprojetoavaliacoess4.exceptions.InvalidNotificationTypeException;
 import com.example.miniprojetoavaliacoess4.exceptions.PersonNotFoundException;
 import com.example.miniprojetoavaliacoess4.model.Person;
+import com.example.miniprojetoavaliacoess4.model.builders.PersonBuilder;
 import com.example.miniprojetoavaliacoess4.model.transport.PersonDTO;
 import com.example.miniprojetoavaliacoess4.model.transport.operations.CreatePersonDTO;
+import com.example.miniprojetoavaliacoess4.operations.notification.create.NotificationFactory;
 import com.example.miniprojetoavaliacoess4.repository.PersonRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +26,12 @@ public class PersonService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    private void sendNotification(Person person, String content) throws InvalidNotificationTypeException {
+        NotificationFactory
+                .createNotification(person.getNotificationType())
+                .send(person, content);
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return personRepository.findByEmail(username)
@@ -30,10 +39,18 @@ public class PersonService implements UserDetailsService {
     }
 
     @Transactional
-    public PersonDTO create(CreatePersonDTO createPersonDTO){
+    public PersonDTO create(CreatePersonDTO createPersonDTO) throws InvalidNotificationTypeException {
         String passwordEncoded = this.passwordEncoder.encode(createPersonDTO.password());
-        Person person = new Person(createPersonDTO, passwordEncoded);
+        Person person = PersonBuilder.builder()
+                .withName(createPersonDTO.name())
+                .withPhone(createPersonDTO.phone())
+                .withEmail(createPersonDTO.email())
+                .withPassword(createPersonDTO.password())
+                .withNotificationType(createPersonDTO.notificationType())
+                .build();
+
         this.personRepository.save(person);
+        this.sendNotification(person, "Cadastro de usuário");
         return new PersonDTO(person);
     }
 
